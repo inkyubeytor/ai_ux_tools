@@ -1,52 +1,40 @@
-from itertools import count
-
-from lib import json_tools as jtools
-from preprocessing import xml_parser, cleaning, lemmatization, analysis
-
-FILE = "780903.male.25.Student.Aquarius"
-
-# Clean XML of a blog post.
-raw_posts = xml_parser.retrieve_posts(
-                xml_parser.load_xml(
-                    f"C:/Users/vijay/Documents/nlp-datasets/blogs/{FILE}.xml"))
+import argparse
+from summarizer import summarizer
+from dataset import dataset
 
 
-def e_summarize(post: str, threshold: float = 1.5) -> str:
+def summarize(dataset_type: str, dataset_dir: str,
+              summarizer_type: str, output_dir: str) -> None:
     """
-    Perform extractive text summarization on an input text.
-    :param post: A blog post to summarize.
-    :param threshold: The relative score threshold for the inclusion of a
-    sentence in a summary.
-    :return: An extractive text summarization.
+    Summarize a dataset with the given method.
+    :param dataset_type: The type of dataset to use.
+    :param dataset_dir: The root of the dataset directory to summarize.
+    :param summarizer_type: The summarization mode to use.
+    :param output_dir: The directory to store the summaries.
+    :return: None
     """
-    # Convert sentences into lists of words.
-    sentences = cleaning.sentences(post)
-    sentences = cleaning.remove_punctuation(sentences)
-    words = [cleaning.words(s) for s in sentences]
-    words = [cleaning.remove_stop_words(s) for s in words]
-
-    # Use POS tagging to lemmatize input.
-    lemmas = [lemmatization.lemmatize(lemmatization.pos_tag(s)) for s in words]
-
-    # Compute sentence scores based on frequency.
-    table = analysis.frequency_table([word for s in lemmas for word in s])
-    scores = [(sum(table[w] for w in s) / len(s)) if len(s) > 0 else 0
-              for s in lemmas]
-    score_threshold = threshold * sum(scores) / len(scores)
-
-    # Add highest scoring sentences to summary.
-    summary = ""
-    for sentence, score in zip(sentences, scores):
-        if score > score_threshold:
-            summary += sentence
-    return summary
+    dataset_class = dataset.datasets.get(dataset_type)
+    summarizer_class = summarizer.summarizers.get(summarizer_type)
+    summary_tool = summarizer_class(dataset_class(dataset_dir))
+    summary_tool.summarize_dataset(output_dir)
 
 
-# TODO: Optimize jtools call?
-summary_gen = ({"post": p, "summary": e_summarize(p)} for p in raw_posts)
-for g, i in zip(summary_gen, count()):
-    jtools.set_in_file(
-        f"C:/Users/vijay/Documents/nlp-datasets/blogs_summaries/{FILE}.json",
-        i,
-        g
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="summarize an input text")
+    parser.add_argument("dataset_type", type=str,
+                        help="type of dataset to use",
+                        choices=list(dataset.datasets.keys()))
+    parser.add_argument("dataset_dir", type=str,
+                        help="path to dataset root")
+    parser.add_argument("summarizer_type", type=str,
+                        help="type of summarizer to use",
+                        choices=list(summarizer.summarizers.keys()))
+    parser.add_argument("output_dir", type=str,
+                        help="path to output directory")
+    args = vars(parser.parse_args())
+    summarize(
+        args.get("dataset_type"),
+        args.get("dataset_dir"),
+        args.get("summarizer_type"),
+        args.get("output_dir")
     )

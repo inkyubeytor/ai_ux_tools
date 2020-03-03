@@ -1,5 +1,9 @@
 <!--TODO: Fill out modules and figure out order-->
 
+# comparator
+
+## comparator
+
 # dataset
 
 ## blogger
@@ -12,10 +16,6 @@
 # lib
 
 ## json_tools
-
-## dataset_lib
-
-## summarizer_lib
 
 
 # preprocessing
@@ -36,5 +36,3 @@ Frequency tables.
 ## frequency
 
 ## summarizer
-
-## summarizer_lib

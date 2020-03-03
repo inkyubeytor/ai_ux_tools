@@ -25,9 +25,9 @@ class FrequencySummarizer(Summarizer):
         :return: An extractive text summarization.
         """
         # Convert sentences into lists of words.
-        sentences = cleaning.sentences(element)
+        sentences = self.dataset.sentence_tokenize(element)
         sentences = cleaning.remove_punctuation(sentences)
-        words = [cleaning.words(s) for s in sentences]
+        words = [self.dataset.word_tokenize(s) for s in sentences]
         words = [cleaning.remove_stop_words(s) for s in words]
 
         # Use POS tagging to lemmatize input.

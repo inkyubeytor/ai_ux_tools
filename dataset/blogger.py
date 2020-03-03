@@ -1,10 +1,10 @@
+# Blog Authorship Corpus - http://u.cs.biu.ac.il/~koppel/BlogCorpus.htm
 import os
 from typing import List
 
 from bs4 import BeautifulSoup
 
 from dataset.dataset import Dataset, Document
-from dataset.dataset_lib import get_size
 
 
 class BloggerDataset(Dataset):
@@ -12,12 +12,7 @@ class BloggerDataset(Dataset):
     Implements the Dataset class for the blogs dataset.
     """
 
-    def __init__(self, root: str):
-        """
-        Initializes a blogs dataset.
-        :param root: Where the blogs dataset is located
-        """
-        super().__init__(root)
+    # General Methods
 
     def dataset_info(self, fp: str = None) -> str:
         # TODO: make output json formatted.
@@ -27,15 +22,15 @@ class BloggerDataset(Dataset):
         printed to stdout.
         :return: The dataset summary as a string.
         """
-        data = "Blogs Dataset\n"
+        data = "Blogger Dataset\n"
         data += f"Number of files: {len(os.listdir(self.root))}\n"
-        data += f"Directory size: {get_size(self.root)}\n"
+        data += f"Directory size: {self.get_size(self.root)}\n"
         if fp is not None:
             with open(fp, "w+") as f:
                 f.write(data)
         return data
 
-    # Document methods
+    # Document Methods
 
     def list_documents(self) -> List[str]:
         """
@@ -52,3 +47,5 @@ class BloggerDataset(Dataset):
         """
         soup = BeautifulSoup(open(f"{self.root}/{document_name}", "r"), 'lxml')
         return [post.text.strip(" \n\t") for post in soup.find_all("post")]
+
+    # Element Methods

@@ -6,6 +6,7 @@ import os
 from dataset.dataset import Dataset, Document, Element
 
 
+# TODO: Fix IndexError in element parsing
 class AMIDataset(Dataset):
     """
     AMI meeting corpus data.

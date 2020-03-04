@@ -3,7 +3,6 @@ from typing import List
 
 from dataset.dataset import Dataset, Element
 from lib import json_tools as jtools
-from summarizer.frequency import FrequencySummarizer
 
 
 class Summarizer:
@@ -60,9 +59,4 @@ class Summarizer:
         :return: None
         """
         for d in self.dataset.list_documents():
-            self.summarize_document(d, f"{fp}/{d}")
-
-
-summarizers = {
-    "frequency": FrequencySummarizer
-}
+            self.summarize_document(d, f"{fp}/{d}.json")

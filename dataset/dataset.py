@@ -2,9 +2,7 @@
 import os
 from typing import List
 
-from preprocessing.cleaning import sentences, words
-from dataset.blogger import BloggerDataset
-from dataset.meetings import AMIDataset
+from lib.preprocessing.cleaning import sentences, words
 
 Element = str
 Document = List[Element]
@@ -101,9 +99,3 @@ class Dataset:
         :return: A list of words in the sentence.
         """
         return words(sentence)
-
-
-datasets = {
-    "blogs": BloggerDataset,
-    "meetings": AMIDataset
-}

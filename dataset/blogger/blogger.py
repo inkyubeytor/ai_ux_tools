@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 from dataset.dataset import Dataset, Document
 
 
+# TODO: Fix Unicode errors when loading documents
 class BloggerDataset(Dataset):
     """
     Implements the Dataset class for the blogs dataset.

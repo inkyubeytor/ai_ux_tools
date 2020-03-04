@@ -1,6 +1,6 @@
 import argparse
-from comparator import comparator
-from dataset import dataset
+from comparator import comparators
+from dataset import datasets
 from lib.np_tools import upper_tri_optima
 from lib import json_tools as jtools
 import numpy as np
@@ -20,8 +20,8 @@ def compare(dataset_type: str, dataset_dir: str,
     :param similar: Whether to pick most similar or most different elements.
     :return: None
     """
-    dataset_class = dataset.datasets.get(dataset_type)
-    comparator_class = comparator.comparators.get(comparator_type)
+    dataset_class = datasets.datasets.get(dataset_type)
+    comparator_class = comparators.comparators.get(comparator_type)
     compare_tool = comparator_class(dataset_class(dataset_dir))
 
     data = compare_tool.dataset.kth_elements(document_index)
@@ -45,12 +45,12 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="compare an input text")
     parser.add_argument("dataset_type", type=str,
                         help="type of dataset to use",
-                        choices=list(dataset.datasets.keys()))
+                        choices=list(datasets.datasets.keys()))
     parser.add_argument("dataset_dir", type=str,
                         help="path to dataset root")
     parser.add_argument("comparator_type", type=str,
                         help="type of comparator to use",
-                        choices=list(comparator.comparators.keys()))
+                        choices=list(comparators.comparators.keys()))
     parser.add_argument("output_dir", type=str,
                         help="path to output directory")
     parser.add_argument("document_index", type=int,

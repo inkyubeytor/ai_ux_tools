@@ -1,6 +1,6 @@
 import argparse
-from summarizer import summarizer
-from dataset import dataset
+from summarizer import summarizers
+from dataset import datasets
 
 
 def summarize(dataset_type: str, dataset_dir: str,
@@ -13,8 +13,8 @@ def summarize(dataset_type: str, dataset_dir: str,
     :param output_dir: The directory to store the summaries.
     :return: None
     """
-    dataset_class = dataset.datasets.get(dataset_type)
-    summarizer_class = summarizer.summarizers.get(summarizer_type)
+    dataset_class = datasets.datasets.get(dataset_type)
+    summarizer_class = summarizers.summarizers.get(summarizer_type)
     summary_tool = summarizer_class(dataset_class(dataset_dir))
     summary_tool.summarize_dataset(output_dir)
 
@@ -23,12 +23,12 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="summarize an input text")
     parser.add_argument("dataset_type", type=str,
                         help="type of dataset to use",
-                        choices=list(dataset.datasets.keys()))
+                        choices=list(datasets.datasets.keys()))
     parser.add_argument("dataset_dir", type=str,
                         help="path to dataset root")
     parser.add_argument("summarizer_type", type=str,
                         help="type of summarizer to use",
-                        choices=list(summarizer.summarizers.keys()))
+                        choices=list(summarizers.summarizers.keys()))
     parser.add_argument("output_dir", type=str,
                         help="path to output directory")
     args = vars(parser.parse_args())

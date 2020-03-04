@@ -1,5 +1,5 @@
 # class for abstracting comparators
-from typing import List, Tuple
+from typing import List
 import numpy as np
 from dataset.dataset import Dataset, Element
 
@@ -38,7 +38,3 @@ class Comparator:
             for j in range(n):
                 out[i, j] = self.compute_difference(elt_list[i], elt_list[j])
         return np.triu(out, 1)
-
-
-comparators = {
-}

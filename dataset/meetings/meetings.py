@@ -6,7 +6,6 @@ import os
 from dataset.dataset import Dataset, Document, Element
 
 
-# TODO: Fix IndexError in element parsing
 class AMIDataset(Dataset):
     """
     AMI meeting corpus data.
@@ -57,9 +56,10 @@ class AMIDataset(Dataset):
         :param document_name: The name of the document to load.
         :return: A loaded document.
         """
+        print(document_name)
         with open(f"{self.data}/{document_name}") as f:
-            lines = [line.replace('\n', ' ') for line in f.readlines()
-                     if line[0] != '#' and len(line) > 0]
+            lines = [line for line in f.readlines()
+                     if line[0] != '#' and line.count('\t') == 2]
         return ['\n'.join([line.split('\t')[2] for line in lines])]
 
     # Element Methods

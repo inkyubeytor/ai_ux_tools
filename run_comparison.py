@@ -59,7 +59,7 @@ if __name__ == "__main__":
                         help="number of top pairs to return")
     parser.add_argument("similar", type=bool, default=True,
                         help="whether to choose most similar elements (true) "
-                             "or most different elements (false")
+                             "or most different elements (false)")
     args = vars(parser.parse_args())
     compare(
         args.get("dataset_type"),

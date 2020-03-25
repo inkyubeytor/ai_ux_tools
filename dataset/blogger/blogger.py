@@ -7,7 +7,6 @@ from bs4 import BeautifulSoup
 from dataset.dataset import Dataset, Document
 
 
-# TODO: Fix Unicode errors when loading documents
 class BloggerDataset(Dataset):
     """
     Implements the Dataset class for the blogs dataset.
@@ -46,7 +45,9 @@ class BloggerDataset(Dataset):
         :param document_name: The name of the blog to load.
         :return: A loaded blog, with each post as a separate.
         """
-        soup = BeautifulSoup(open(f"{self.root}/{document_name}", "r"), 'lxml')
+        print(document_name)
+        soup = BeautifulSoup(open(f"{self.root}/{document_name}", "r",
+                                  errors='ignore'), 'lxml')
         return [post.text.strip(" \n\t") for post in soup.find_all("post")]
 
     # Element Methods

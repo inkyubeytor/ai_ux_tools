@@ -9,7 +9,7 @@ class FrequencySummarizer(Summarizer):
     Simple summarizer based on word frequencies.
     """
 
-    def summarize_element(self, element: Element, threshold: float = 1.5) \
+    def summarize_element(self, element: Element, threshold: float = 1.2) \
             -> str:
         """
         Perform extractive text summarization on an input text.
@@ -27,7 +27,6 @@ class FrequencySummarizer(Summarizer):
         # Use POS tagging to lemmatize input.
         lemmas = [lemmatization.lemmatize(lemmatization.pos_tag(s)) for s in
                   words]
-
         # Compute sentence scores based on frequency.
         table = analysis.frequency_table([word for s in lemmas for word in s])
         scores = [(sum(table[w] for w in s) / len(s)) if len(s) > 0 else 0

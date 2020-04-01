@@ -1,15 +1,16 @@
 from comparator.comparator import Comparator
 from dataset.dataset import Element
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.preprocessing import normalize
+import numpy as np
 
 
-# TODO: Finish implementation of this
 class CosineComparator(Comparator):
     """
     Compares elements based on cosine similarity of word vectors.
+    Uses sklearn-based cosine similarity.
     https://towardsdatascience.com/overview-of-text-similarity-metrics-3397c4601f50
     """
-
-    # def _word_vector(self, elt: Element) -> SOMETHING:
 
     def compute_difference(self, elt1: Element, elt2: Element) -> float:
         """
@@ -18,4 +19,9 @@ class CosineComparator(Comparator):
         :param elt2: The second element to compare.
         :return: 1 - cosine similarity of the inputs.
         """
-        raise NotImplementedError
+        text = [elt1, elt2]
+        vectorizer = CountVectorizer(text)
+        vectorizer.fit(text)
+        vectors = vectorizer.transform(text).toarray()
+        vectors = normalize(vectors, norm='l2')
+        return 1.0 - np.dot(vectors[0], vectors[1])

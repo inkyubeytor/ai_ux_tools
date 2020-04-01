@@ -1,5 +1,7 @@
 from comparator.jaccard.jaccard import JaccardComparator
+from comparator.cosine.cosine import CosineComparator
 
 comparators = {
-    "jaccard": JaccardComparator
+    "jaccard": JaccardComparator,
+    "cosine": CosineComparator
 }

@@ -38,4 +38,4 @@ class TestDriveCleanDataset(Dataset):
         :return: A loaded document.
         """
         with open(f"{self.root}/{document_name}") as f:
-            return f.readlines()
+            return [line.rstrip('\n') for line in f.readlines()]

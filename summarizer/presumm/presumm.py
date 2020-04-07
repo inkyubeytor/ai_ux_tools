@@ -166,7 +166,7 @@ class PreSummSummarizer(Summarizer):
         out = self._summarize_file(timestamp)
         # Read summary and return as string
         with open(f'summarizer/presumm/temp/{out}', 'r') as f:
-            return f.read()
+            return f.read().rstrip('\n')
 
     def summarize_document(self, document_name: str, fp: str = None) \
             -> List[str]:
@@ -188,7 +188,7 @@ class PreSummSummarizer(Summarizer):
         out = self._summarize_file(timestamp)
         # Read summary and return as string
         with open(f'summarizer/presumm/temp/{out}', 'r') as f:
-            summaries = f.readlines()
+            summaries = [line.rstrip('\n') for line in f.readlines()]
         if fp is not None:
             self.save(document, summaries, fp)
         return summaries

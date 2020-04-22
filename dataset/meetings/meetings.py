@@ -56,9 +56,8 @@ class AMIDataset(Dataset):
         :param document_name: The name of the document to load.
         :return: A loaded document.
         """
-        print(document_name)
         with open(f"{self.data}/{document_name}") as f:
-            lines = [line for line in f.readlines()
+            lines = [line.rstrip() for line in f.readlines()
                      if line[0] != '#' and line.count('\t') == 2]
         return ['\n'.join([line.split('\t')[2] for line in lines])]
 

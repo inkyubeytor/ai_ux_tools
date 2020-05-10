@@ -12,7 +12,6 @@ class Dataset:
     """
     Abstracts loading of datasets.
     """
-    # TODO: Handling of labels for datasets?
 
     # General Methods
 

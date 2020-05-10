@@ -6,6 +6,7 @@ from lib import json_tools as jtools
 import numpy as np
 
 
+# TODO: Switch to comparing elements between files.
 def compare(dataset_type: str, dataset_dir: str,
             comparator_type: str, output_dir: str,
             document_index: int, num_pairs: int, similar: bool = True) -> None:

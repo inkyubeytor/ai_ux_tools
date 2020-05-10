@@ -1,6 +1,5 @@
 from comparator.comparator import Comparator
 from dataset.dataset import Element
-import os
 import numpy as np
 import subprocess
 
@@ -12,7 +11,7 @@ class FastTextComparator(Comparator):
     https://github.com/ashokc/Bow-to-Bert/blob/master/fasttext_sentence_similarity.py
     """
 
-    # TODO: Fix grep call
+    # TODO: Make word vector into hash dictionary.
     def compute_difference(self, elt1: Element, elt2: Element) -> float:
         """
         Computes the similarity of 2 elements using fasttext.
@@ -30,9 +29,15 @@ class FastTextComparator(Comparator):
         filename = 'crawl-300d-2M-subword/crawl-300d-2M-subword.vec'
         docVectors = np.zeros((3, wordVectorLength), dtype='float32')
         for word in words:
+            """
+            w = "^'" + word + " ' "
+            s = subprocess.check_output('grep ' + w + filename,
+                                        cwd="comparator/fasttext/",
+                                        shell=True).decode("utf-8")
+            print(s)
+            """
             w = "^\"" + word + " \" "
             grep_command = 'grep ' + w + filename + ' -m 1'
-            # TODO: Fix slowness of grep on words with apostrophes
             try:
                 s = subprocess.check_output(grep_command,
                                             cwd="comparator/fasttext/",

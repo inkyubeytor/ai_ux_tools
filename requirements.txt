@@ -41,7 +41,7 @@ summa==1.2.0
 tensorboard==1.15.0
 tensorboardX==1.9
 tensorflow-estimator==1.15.1
-tensorflow-gpu==1.15.0
+tensorflow-gpu==2.5.1
 termcolor==1.1.0
 torch==1.1.0
 tqdm==4.45.0
